@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Ambient halo behind orb -->
+    <radialGradient id="halo" cx="50%" cy="58%" r="50%">
+      <stop offset="0%" stop-color="#883535" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#883535" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Main orb body: lit upper-left, all stops in the #883535 burgundy family -->
+    <radialGradient id="body" cx="36%" cy="30%" r="72%">
+      <stop offset="0%"   stop-color="#a84848"/>  <!-- lit side: same hue, lighter -->
+      <stop offset="28%"  stop-color="#883535"/>  <!-- primary -->
+      <stop offset="68%"  stop-color="#4e1e1e"/>  <!-- shadow -->
+      <stop offset="100%" stop-color="#2c0d0d"/>  <!-- deep edge -->
+    </radialGradient>
+
+    <!-- Warm inner glow — stays in burgundy family -->
+    <radialGradient id="innerGlow" cx="52%" cy="58%" r="48%">
+      <stop offset="0%"   stop-color="#9e4040" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#883535" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Primary specular highlight -->
+    <radialGradient id="spec" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.90"/>
+      <stop offset="45%"  stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Caustic light (refraction through glass, bottom interior) -->
+    <radialGradient id="caustic" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c47070" stop-opacity="0.40"/>
+      <stop offset="100%" stop-color="#c47070" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Clip interior elements to orb boundary -->
+    <clipPath id="orbClip">
+      <circle cx="100" cy="97" r="68"/>
+    </clipPath>
+
+    <!-- Blur for mist wisps -->
+    <filter id="mist" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5.5"/>
+    </filter>
+
+    <!-- Drop shadow -->
+    <filter id="shadow" x="-25%" y="-15%" width="150%" height="145%">
+      <feDropShadow dx="0" dy="7" stdDeviation="14"
+                    flood-color="#883535" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient halo -->
+  <ellipse cx="100" cy="110" rx="90" ry="82" fill="url(#halo)"/>
+
+  <g filter="url(#shadow)">
+    <!-- Orb base -->
+    <circle cx="100" cy="97" r="68" fill="url(#body)"/>
+
+    <!-- Inner warm glow -->
+    <circle cx="100" cy="97" r="68" fill="url(#innerGlow)"/>
+
+    <!-- Sage mist wisps — subtle, clipped, blurred -->
+    <g clip-path="url(#orbClip)" filter="url(#mist)" opacity="0.30">
+      <!-- Main curling wisp -->
+      <path d="M 55 118 C 68 88, 96 100, 100 114 C 104 128, 132 115, 146 90"
+            stroke="#c5d4c0" stroke-width="11" fill="none"
+            stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Secondary wisp -->
+      <path d="M 68 130 C 84 110, 100 122, 116 110"
+            stroke="#c5d4c0" stroke-width="8" fill="none"
+            stroke-linecap="round"/>
+      <!-- Small trailing tendril -->
+      <path d="M 88 88 C 95 78, 108 84, 112 76"
+            stroke="#c5d4c0" stroke-width="5" fill="none"
+            stroke-linecap="round"/>
+    </g>
+
+    <!-- Caustic refraction at lower-right -->
+    <ellipse cx="118" cy="146" rx="20" ry="13"
+             fill="url(#caustic)" clip-path="url(#orbClip)"
+             transform="rotate(-20, 118, 146)"/>
+
+    <!-- Primary glass highlight (upper-left) -->
+    <ellipse cx="76" cy="70" rx="24" ry="19"
+             fill="url(#spec)"
+             transform="rotate(-28, 76, 70)"/>
+
+    <!-- Secondary small specular -->
+    <ellipse cx="122" cy="57" rx="8" ry="5.5"
+             fill="white" opacity="0.35"
+             transform="rotate(18, 122, 57)"/>
+
+    <!-- Subtle rim edge highlight -->
+    <circle cx="100" cy="97" r="67.5" fill="none"
+            stroke="white" stroke-width="1.2" opacity="0.12"/>
+  </g>
+</svg>
